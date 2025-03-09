@@ -20,19 +20,18 @@ const useStyles = makeStyles()((theme) => ({
     }
 }));
 
-function DisplayHeader() {
+function HeaderView() {
     const { classes } = useStyles();
     return (
-        <div style={{ backgroundColor: "white", justifyItems: "center" }}>
+        <div style={{ justifyItems: "center" }}>
             <div style={{ justifyItems: "center", alignItems: "center" }}>
                 <div className={classes.atmSignStyle}>
                     <img src={atmSign} alt="atmSign" />
                     <img src={graffiti} alt="atmSign" className={classes.graffitiStyle} />
-
                 </div>
             </div>
         </div>
     )
 }
 
-export default DisplayHeader;
+export default HeaderView;
