@@ -3,7 +3,6 @@ import { Grid2 } from '@mui/material';
 
 import HeaderView from './components/atm-header';
 import ScreenView from './components/atm-screen';
-import FooterView from './components/atm-footer';
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
       <Grid2 style={{  justifyItems: "center"}}>
           <HeaderView />
           <ScreenView />
-          <FooterView />
       </Grid2>
     </Grid2>
   );
