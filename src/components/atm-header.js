@@ -20,7 +20,7 @@ const useStyles = makeStyles()((theme) => ({
     }
 }));
 
-function HeaderView() {
+const HeaderView = () => {
     const { classes } = useStyles();
     return (
         <div style={{ justifyItems: "center" }}>

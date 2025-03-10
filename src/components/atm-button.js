@@ -12,7 +12,7 @@ const useStyles = makeStyles()((theme) => ({
     }
 }));
 
-function AtmButton() {
+const AtmButton = () => {
     const { classes } = useStyles();
     return <Button className={classes.buttonStyle} />
 }
