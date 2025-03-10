@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { Grid2, Button, TextField } from '@mui/material';
 import ccSprite from "../assets/creditcard_sprite.png";
 import stickerGraffiti from "../assets/sticker_graf.png";
@@ -9,14 +9,14 @@ const ScreenView = () => {
 
     const { classes } = useStyles();
     const [welcomeMsg, setWelcomeMsg] = useState("Welcome to the ATM");
-    const [didPinIn, setDidPinIn] = useState(false);
-
+    const [isPinValid, setisPinValid] = useState(false);
     const [didClickEnterPinBtn, setDidClickEnterPinBtn] = useState(false);
+    const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
     const displayEnterPinOption = () => {
         return <Grid2 className={classes.rightOptionStyle} container>
             <Grid2 style={{ alignContent: "center" }}>
-                {didClickEnterPinBtn ? "OK" : "Enter PIN"}
+                {isPinValid ? "OK" : "Enter PIN"}
             </Grid2>
             <Grid2 style={{ alignContent: "center", margin: "-5px 0 0 0" }}>
                 <div className={classes.atmOptionTrackStyle} />
@@ -42,10 +42,28 @@ const ScreenView = () => {
 
     const displayPinEntry = () => {
         setDidClickEnterPinBtn(!didClickEnterPinBtn);
+        if (isPinValid) {
+            setIsUserAuthenticated(true);
+        }
     }
 
     const displayUserOptions = () => {
+        return <Grid2 className={classes.rightOptionStyle} container>
+            <Grid2 style={{ alignContent: "center" }}>
+                User options
+            </Grid2>
+            <Grid2 style={{ alignContent: "center", margin: "-5px 0 0 0" }}>
+                <div className={classes.atmOptionTrackStyle} />
+            </Grid2>
+        </Grid2>
+    }
 
+    const pinEntryFieldDidChange = (pinStr) => {
+        if (pinStr.length === 4) {
+            setisPinValid(true);
+        } else {
+            setisPinValid(false);
+        }
     }
 
     const leftButtonOptions = [
@@ -70,12 +88,15 @@ const ScreenView = () => {
                     {didClickEnterPinBtn ?
                         <Grid2 direction={"column"} style={{ paddingLeft: "65px", position: "absolute", alignContent: "center", paddingTop: "50px" }} container>
                             Enter your PIN
-                            <TextField size="small" style={{ width: "100px" }} />
+                            <TextField inputProps={{ maxLength: 4 }} size="small" onChange={(e) => {
+                                const pinStr = e.target.value;
+                                pinEntryFieldDidChange(pinStr)
+                             }} style={{ width: "100px" }} />
                         </Grid2>
                         : null
                     }
                     <Grid2 className={classes.optionContainerStyle} container>
-                        {!didPinIn ? displayEnterPinOption() : displayUserOptions()}
+                        {!isUserAuthenticated ? displayEnterPinOption() : displayUserOptions()}
                     </Grid2>
                 </div>
                 <img src={stickerGraffiti} alt="stickerGraffiti" className={classes.stickerGraffitiStyle} />
