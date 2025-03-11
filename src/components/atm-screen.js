@@ -13,9 +13,19 @@ const ScreenView = () => {
     const [didClickEnterPinBtn, setDidClickEnterPinBtn] = useState(false);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
     const [creditCardSprite, setCreditCardSprite] = useState(ccDefaultSprite);
+    const [pinTextField, setPinTextField] = useState("");
+
+    useEffect(() => {
+        if (pinTextField.length === 4) {
+            setisPinValid(true);
+        } else {
+            setisPinValid(false);
+        }
+    }, [pinTextField.length])
 
     useEffect(() => {
         if (isUserAuthenticated) {
+            // highlight the "star" sprite if the user is authenticated and "logged" into the atm
             setCreditCardSprite(ccSelectedSprite);
         } else {
             setCreditCardSprite(ccDefaultSprite);
@@ -42,18 +52,19 @@ const ScreenView = () => {
     const displayPinEntry = () => {
         setDidClickEnterPinBtn(!didClickEnterPinBtn);
         if (isPinValid) {
+            // if the pin is valid (length of 4), set isUserAuthenticated to true to display user options
             setIsUserAuthenticated(true);
         }
     }
 
-    const pinEntryFieldDidChange = (pinStr) => {
-        if (pinStr.length === 4) {
-            setisPinValid(true);
-        } else {
-            setisPinValid(false);
-        }
+    // use regex to only allow numbers in the pin field
+    const handlePinTextFieldChange = (e) => {
+        const pinStr = e.target.value;
+        const numericValue = pinStr.replace(/[^0-9]/g, '');
+        setPinTextField(numericValue);
     }
 
+    // create left atm button options that can be mapped and displayed on the UI
     const leftButtonOptions = [
         { labelNm: "", onClickFuncNm: () => { } },
         { labelNm: "", onClickFuncNm: () => { } },
@@ -61,6 +72,7 @@ const ScreenView = () => {
         { labelNm: "Deposit", onClickFuncNm: () => depositFunds() }
     ];
 
+    // create right atm button options that can be mapped and displayed on the UI
     const rightButtonOptions = [
         { labelNm: "", onClickFuncNm: () => { } },
         { labelNm: "Exit", onClickFuncNm: () => exitSession() },
@@ -68,6 +80,7 @@ const ScreenView = () => {
         { labelNm: "Re-Enter Pin", onClickFuncNm: () => displayPinEntry() }
     ];
 
+    // display welcome message based on whether the user is authenticated or not
     const displayWelcomeMsg = () => {
         return <div>
             {!isUserAuthenticated ? <> Welcome to the ATM <br /><br /> </> :
@@ -84,10 +97,7 @@ const ScreenView = () => {
                     {didClickEnterPinBtn ?
                         <Grid2 direction={"column"} style={{ paddingLeft: "65px", position: "absolute", alignContent: "center", paddingTop: "20px" }} container>
                             Enter your PIN
-                            <TextField inputProps={{ maxLength: 4 }} size="small" onChange={(e) => {
-                                const pinStr = e.target.value;
-                                pinEntryFieldDidChange(pinStr)
-                            }} style={{ width: "100px" }} />
+                            <TextField inputProps={{ maxLength: 4 }} size="small" onChange={handlePinTextFieldChange} value={pinTextField} style={{ width: "100px" }} />
                         </Grid2>
                         : null
                     }
@@ -101,6 +111,7 @@ const ScreenView = () => {
         </Grid2>
     }
 
+    // map over all screen button options to display on the UI
     const displayLoggedInUserOptions = () => {
         return <>
             <Grid2>
@@ -139,6 +150,7 @@ const ScreenView = () => {
         </>
     }
 
+    // display left side clickable buttons
     const displayLeftButtonView = () => {
         return <Grid2 className={classes.leftButtonStyle} container spacing={1}>
             {leftButtonOptions.map((option, index) => {
@@ -150,6 +162,7 @@ const ScreenView = () => {
         </Grid2>
     }
 
+    // display right side clickable buttons
     const displayRightButtonView = () => {
         return <Grid2 className={classes.rightButtonStyle} container spacing={1}>
             {rightButtonOptions.map((option, index) => {
@@ -161,6 +174,7 @@ const ScreenView = () => {
         </Grid2>
     }
 
+    // display default "Enter PIN" option on UI load
     const displayDefaultPinOption = () => {
         return <Grid2 className={classes.rightOptionStyle} container>
             <Grid2 style={{ alignContent: "center", height: "25px" }}>
@@ -181,6 +195,7 @@ const ScreenView = () => {
                 </div>
             </Grid2>
             <Grid2 container style={{ height: "100%" }}>
+                {/* render the atm screen and all buttons */}
                 {displayLeftButtonView()}
                 {displayScreenView()}
                 {displayRightButtonView()}
