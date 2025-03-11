@@ -35,7 +35,8 @@ const ScreenView = () => {
     }
 
     const exitSession = () => {
-        alert("exit session")
+        setIsUserAuthenticated(false);
+        setisPinValid(false);
     }
 
     const fetchBalance = () => {
