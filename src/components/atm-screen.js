@@ -9,7 +9,6 @@ import { useStyles } from "./atm-styles";
 const ScreenView = () => {
 
     const { classes } = useStyles();
-    const [welcomeMsg, setWelcomeMsg] = useState("Welcome to the ATM");
     const [isPinValid, setisPinValid] = useState(false);
     const [didClickEnterPinBtn, setDidClickEnterPinBtn] = useState(false);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
@@ -22,17 +21,6 @@ const ScreenView = () => {
             setCreditCardSprite(ccDefaultSprite);
         }
     }, [isUserAuthenticated])
-
-    const displayEnterPinOption = () => {
-        return <Grid2 className={classes.rightOptionStyle} container>
-            <Grid2 style={{ alignContent: "center", height: "25px" }}>
-                {isPinValid ? "OK" : "Enter PIN"}
-            </Grid2>
-            <Grid2 style={{ height: "21px", alignContent: "center" }}>
-                <div className={classes.atmOptionTrackStyle} />
-            </Grid2>
-        </Grid2>
-    }
 
     const exitSession = () => {
         setIsUserAuthenticated(false);
@@ -80,13 +68,21 @@ const ScreenView = () => {
         { labelNm: "Re-Enter Pin", onClickFuncNm: () => displayPinEntry() }
     ];
 
+    const displayWelcomeMsg = () => {
+        return <div>
+            {!isUserAuthenticated ? <> Welcome to the ATM <br /><br /> </> :
+                <> Hi Peter Parker!<br />Please make a choice... </>
+            }
+        </div>
+    }
+
     const displayScreenView = () => {
         return <Grid2>
             <div className={classes.screenBgStyle}>
                 <div className={classes.screenStyle}>
-                    {welcomeMsg}
+                    {displayWelcomeMsg()}
                     {didClickEnterPinBtn ?
-                        <Grid2 direction={"column"} style={{ paddingLeft: "65px", position: "absolute", alignContent: "center", paddingTop: "50px" }} container>
+                        <Grid2 direction={"column"} style={{ paddingLeft: "65px", position: "absolute", alignContent: "center", paddingTop: "20px" }} container>
                             Enter your PIN
                             <TextField inputProps={{ maxLength: 4 }} size="small" onChange={(e) => {
                                 const pinStr = e.target.value;
@@ -96,7 +92,7 @@ const ScreenView = () => {
                         : null
                     }
                     <Grid2 className={classes.optionContainerStyle} container>
-                        {!isUserAuthenticated ? displayEnterPinOption() : displayUserOptions()}
+                        {!isUserAuthenticated ? displayDefaultPinOption() : displayLoggedInUserOptions()}
                     </Grid2>
                 </div>
                 <img src={stickerGraffiti} alt="stickerGraffiti" className={classes.stickerGraffitiStyle} />
@@ -105,20 +101,42 @@ const ScreenView = () => {
         </Grid2>
     }
 
-    const displayUserOptions = () => {
-        return <Grid2>
-            {rightButtonOptions.map((option, index) => {
-                return <Grid2 className={classes.rightOptionStyle} key={index} container>
-                    <Grid2 style={{ alignContent: "center", height: "25px" }}>
-                        {option.labelNm}
+    const displayLoggedInUserOptions = () => {
+        return <>
+            <Grid2>
+                {/* display left screen button options */}
+                {leftButtonOptions.map((option, index) => {
+                    return <Grid2 className={classes.leftOptionStyle} key={index} container>
+                        {
+                            option.labelNm &&
+                            <Grid2 style={{ height: "21px", alignContent: "start" }}>
+                                <div className={classes.atmOptionTrackStyle} />
+                            </Grid2>
+                        }
+                        <Grid2 style={{ alignContent: "center", height: "25px" }}>
+                            {option.labelNm}
+                        </Grid2>
+
                     </Grid2>
-                    {option.labelNm &&
-                        <Grid2 style={{ height: "21px", alignContent: "center" }}>
-                            <div className={classes.atmOptionTrackStyle} />
-                        </Grid2>}
-                </Grid2>
-            })}
-        </Grid2>
+                })}
+            </Grid2>
+            <Grid2>
+                {/* display right screen button options */}
+                {rightButtonOptions.map((option, index) => {
+                    return <Grid2 className={classes.rightOptionStyle} key={index} container>
+                        <Grid2 style={{ alignContent: "center", height: "25px" }}>
+                            {option.labelNm}
+                        </Grid2>
+                        {
+                            option.labelNm &&
+                            <Grid2 style={{ height: "21px", alignContent: "start" }}>
+                                <div className={classes.atmOptionTrackStyle} />
+                            </Grid2>
+                        }
+                    </Grid2>
+                })}
+            </Grid2>
+        </>
     }
 
     const displayLeftButtonView = () => {
@@ -140,6 +158,17 @@ const ScreenView = () => {
                     <Button onClick={() => option.onClickFuncNm()} className={classes.buttonStyle} />
                 </Grid2>
             })}
+        </Grid2>
+    }
+
+    const displayDefaultPinOption = () => {
+        return <Grid2 className={classes.rightOptionStyle} container>
+            <Grid2 style={{ alignContent: "center", height: "25px" }}>
+                {isPinValid ? "OK" : "Enter PIN"}
+            </Grid2>
+            <Grid2>
+                <div className={classes.atmOptionTrackStyle} />
+            </Grid2>
         </Grid2>
     }
 

@@ -48,6 +48,7 @@ export const useStyles = makeStyles()((theme) => ({
         backgroundColor: "#7eb4d5",
         width: "235px",
         height: "210px",
+        paddingTop: "15px"
     },
     screenBgStyle: {
         padding: "5px 0 5px 5px",
@@ -71,23 +72,27 @@ export const useStyles = makeStyles()((theme) => ({
         justifyContent: "end",
         flexDirection: "column",
         height: "220px",
-        margin: "-20px 0 0 0"
+        margin: "-7px 0 0 0"
     },
     leftButtonStyle: {
         justifyContent: "end",
         flexDirection: "column",
         height: "220px",
-        margin: "-20px 0 0 0"
+        margin: "-7px 0 0 0"
     },
     optionContainerStyle: {
         justifyContent: "end",
         flexDirection: "column",
         height: "200px",
-        margin: "-15px 0 0 0"
+        margin: "-33px 0 0 0"
     },
     rightOptionStyle: {
         height: "33px",
         justifyContent: "end",
+    },
+    leftOptionStyle: {
+        height: "33px",
+        justifyContent: "start",
     },
     systemsLabelStyle: {
         position: "absolute",
