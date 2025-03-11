@@ -28,13 +28,13 @@ export const useStyles = makeStyles()((theme) => ({
         backgroundPosition: 'center',
         minHeight: "25px",
         minWidth: "40px",
-        backgroundImage: `url(${atmButton})`
+        backgroundImage: `url(${atmButton})`,
     },
     atmButtonTrackStyle: {
         height: theme.spacing(0.25),
         width: theme.spacing(1.5),
         backgroundColor: theme.palette.grey[500],
-        display: "inline-block"
+        display: "inline-block",
     },
     atmOptionTrackStyle: {
         height: theme.spacing(0.25),
@@ -70,20 +70,23 @@ export const useStyles = makeStyles()((theme) => ({
     rightButtonStyle: {
         justifyContent: "end",
         flexDirection: "column",
-        height: "210px",
+        height: "220px",
+        margin: "-20px 0 0 0"
     },
     leftButtonStyle: {
         justifyContent: "end",
         flexDirection: "column",
-        height: "210px",
+        height: "220px",
+        margin: "-20px 0 0 0"
     },
     optionContainerStyle: {
         justifyContent: "end",
         flexDirection: "column",
-        height: "190px",
+        height: "200px",
+        margin: "-15px 0 0 0"
     },
     rightOptionStyle: {
-        height: "30px",
+        height: "33px",
         justifyContent: "end",
     },
     systemsLabelStyle: {

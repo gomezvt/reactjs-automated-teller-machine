@@ -1,6 +1,7 @@
 import React, { useState, useEffect, use } from "react";
 import { Grid2, Button, TextField } from '@mui/material';
-import ccSprite from "../assets/creditcard_sprite.png";
+import ccDefaultSprite from "../assets/default_creditcard_sprite.png";
+import ccSelectedSprite from "../assets/selected_creditcard_sprite.png";
 import stickerGraffiti from "../assets/sticker_graf.png";
 import systemsLabel from "../assets/systems.png";
 import { useStyles } from "./atm-styles";
@@ -12,13 +13,22 @@ const ScreenView = () => {
     const [isPinValid, setisPinValid] = useState(false);
     const [didClickEnterPinBtn, setDidClickEnterPinBtn] = useState(false);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+    const [creditCardSprite, setCreditCardSprite] = useState(ccDefaultSprite);
+
+    useEffect(() => {
+        if (isUserAuthenticated) {
+            setCreditCardSprite(ccSelectedSprite);
+        } else {
+            setCreditCardSprite(ccDefaultSprite);
+        }
+    }, [isUserAuthenticated])
 
     const displayEnterPinOption = () => {
         return <Grid2 className={classes.rightOptionStyle} container>
-            <Grid2 style={{ alignContent: "center" }}>
+            <Grid2 style={{ alignContent: "center", height: "25px" }}>
                 {isPinValid ? "OK" : "Enter PIN"}
             </Grid2>
-            <Grid2 style={{ alignContent: "center", margin: "-5px 0 0 0" }}>
+            <Grid2 style={{ height: "21px", alignContent: "center" }}>
                 <div className={classes.atmOptionTrackStyle} />
             </Grid2>
         </Grid2>
@@ -45,17 +55,6 @@ const ScreenView = () => {
         if (isPinValid) {
             setIsUserAuthenticated(true);
         }
-    }
-
-    const displayUserOptions = () => {
-        return <Grid2 className={classes.rightOptionStyle} container>
-            <Grid2 style={{ alignContent: "center" }}>
-                User options
-            </Grid2>
-            <Grid2 style={{ alignContent: "center", margin: "-5px 0 0 0" }}>
-                <div className={classes.atmOptionTrackStyle} />
-            </Grid2>
-        </Grid2>
     }
 
     const pinEntryFieldDidChange = (pinStr) => {
@@ -91,7 +90,7 @@ const ScreenView = () => {
                             <TextField inputProps={{ maxLength: 4 }} size="small" onChange={(e) => {
                                 const pinStr = e.target.value;
                                 pinEntryFieldDidChange(pinStr)
-                             }} style={{ width: "100px" }} />
+                            }} style={{ width: "100px" }} />
                         </Grid2>
                         : null
                     }
@@ -102,6 +101,22 @@ const ScreenView = () => {
                 <img src={stickerGraffiti} alt="stickerGraffiti" className={classes.stickerGraffitiStyle} />
                 <img src={systemsLabel} alt="systemsLabel" className={classes.systemsLabelStyle} />
             </div>
+        </Grid2>
+    }
+
+    const displayUserOptions = () => {
+        return <Grid2>
+            {rightButtonOptions.map((option, index) => {
+                return <Grid2 className={classes.rightOptionStyle} key={index} container>
+                    <Grid2 style={{ alignContent: "center", height: "25px" }}>
+                        {option.labelNm}
+                    </Grid2>
+                    {option.labelNm &&
+                        <Grid2 style={{ height: "21px", alignContent: "center" }}>
+                            <div className={classes.atmOptionTrackStyle} />
+                        </Grid2>}
+                </Grid2>
+            })}
         </Grid2>
     }
 
@@ -119,7 +134,7 @@ const ScreenView = () => {
     const displayRightButtonView = () => {
         return <Grid2 className={classes.rightButtonStyle} container spacing={1}>
             {rightButtonOptions.map((option, index) => {
-                return <Grid2 key={index}>
+                return <Grid2 key={index} style={{ height: "25px" }}>
                     <div className={classes.atmButtonTrackStyle} />
                     <Button onClick={() => option.onClickFuncNm()} className={classes.buttonStyle} />
                 </Grid2>
@@ -132,7 +147,7 @@ const ScreenView = () => {
             <Grid2 style={{ width: "100%", justifyItems: "center" }}>
                 <div className={classes.atmSignShadowStyle} />
                 <div>
-                    <img src={ccSprite} alt="ccSprite" style={{ padding: "15px 0 0 0" }} />
+                    <img src={creditCardSprite} alt="ccSprite" style={{ padding: "10px 0 0 0" }} />
                 </div>
             </Grid2>
             <Grid2 container style={{ height: "100%" }}>
