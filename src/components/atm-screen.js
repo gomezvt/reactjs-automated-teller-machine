@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid2, Button, TextField } from '@mui/material';
 import ccDefaultSprite from "../assets/default_creditcard_sprite.png";
 import ccSelectedSprite from "../assets/selected_creditcard_sprite.png";
@@ -88,7 +88,7 @@ const ScreenView = () => {
         }
     }, [isPinValid, depositWithdrawFieldText.length])
 
-    // called when "Enter" button is clicked, which can have "Enter Pin", "Re-Enter Pin", and "OK" labels (uses "enterButtonLabel")
+    // called when "Enter" button is clicked, which can have "Enter PIN", "Re-Enter PIN", and "OK" labels (uses "enterButtonLabel")
     const displayPinEntry = () => {
         setPinFieldText("");
         setDidClickDeposit(false);
@@ -158,11 +158,11 @@ const ScreenView = () => {
         { labelNm: "", onClickFuncNm: () => { } },
         { labelNm: "Exit", onClickFuncNm: () => exitSession() },
         { labelNm: "Balance", onClickFuncNm: () => fetchBalance() },
-        { labelNm: isPinValid || depositWithdrawFieldText.length > 0 ? "OK" : "Re-Enter Pin", onClickFuncNm: () => displayPinEntry() }
+        { labelNm: isPinValid || depositWithdrawFieldText.length > 0 ? "OK" : "Re-Enter PIN", onClickFuncNm: () => displayPinEntry() }
     ];
 
     // display welcome message based on whether the user is authenticated or not
-    const welcomeScreenMsg = () => {
+    const displayWelcomeMsg = () => {
         if (!isUserAuthenticated) {
             return <>Welcome to the ATM <br /><br /></>
         } else {
@@ -170,7 +170,8 @@ const ScreenView = () => {
         }
     }
 
-    const optionScreenMsg = () => {
+    // show balance information to include textfield to withdraw/deposit depending on the button that was clicked
+    const displayBalanceView = () => {
         if (didCheckBalance) {
             return `Your balance is $${balance.toString()}`;
         }
@@ -194,7 +195,7 @@ const ScreenView = () => {
                 <div className={classes.screenStyle}>
                     <Grid2 style={{ textAlign: "center" }}>
                         {/* display welcome message on top of screen */}
-                        {welcomeScreenMsg()}
+                        {displayWelcomeMsg()}
                     </Grid2>
                     <Grid2>
                         {/* if initial Enter PIN button was clicked, show textfield to enter PIN */}
@@ -221,7 +222,7 @@ const ScreenView = () => {
     const displayLoggedInUserOptions = () => {
         return <Grid2 style={{ height: "175px" }}>
             <Grid2 style={{ width: "100%", height: "45px", alignContent: "center" }}>
-                {optionScreenMsg()}
+                {displayBalanceView()}
             </Grid2>
             <Grid2 flexDirection={"row"} direction={"row"} container>
                 <Grid2 style={{ width: "50%", height: "100%" }}>
