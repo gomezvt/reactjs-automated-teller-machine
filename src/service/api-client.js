@@ -1,8 +1,8 @@
 // api-client to simulate service api calls
 
 // 1.
-// for actual implementation, a deployed backend service could be on Node.js, as an example, and this api-client would call the respective service endpoint
-// based on the user's interactions on the UI to either authenticate with pin, check balance, withdraw funds, deposit funds, or exit the application
+// for actual implementation, a deployed backend service could be on Node.js, as an example, and it could query an Oracle database, given the need for structured user data and user/bank account data relationships
+// this api-client would call the respective service endpoint based on the user's interactions on the UI to either authenticate with pin, check balance, withdraw funds, deposit funds, or exit the application
 
 // 2.
 // api endpoints would be designed and implemented in the live service to include params such as the user's pin, and request validation  
@@ -22,6 +22,7 @@ const api = {
     // HTTP POST method for underlying service API
     authenticateUserWithPin: async (pin) => {
         return new Promise((resolve) => {
+            // promise used here for demonstration, but could be changed to "await" and return the response from the service instead without returning "new Promise" (e.g. const res = await authenticateUserWithPin())
             setTimeout(() => {
                 // return status of OK if user is successfully authenticated, or reject as in the case of an error
                 // http status code of 200 would be returned by the service for successful call, or 500 for technical error, etc.
@@ -32,6 +33,7 @@ const api = {
     // HTTP PUT method for underlying service API
     withdrawFunds: async (amount) => {
         return new Promise((resolve) => {
+            // promise used here for demonstration, but could be changed to "await" and return the response from the service instead without returning "new Promise" (e.g. const res = await withdrawFunds())
             setTimeout(() => {
                 // return status of OK if funds are successfully withdrawn, or reject as in the case of an error
                 // http status code of 200 would be returned by the service for successful call, or 500 for technical error, etc.
@@ -42,6 +44,7 @@ const api = {
     // HTTP PUT method for underlying service API
     depositFunds: async (amount) => {
         return new Promise((resolve) => {
+            // promise used here for demonstration, but could be changed to "await" and return the response from the service instead without returning "new Promise" (e.g. const res = await depositFunds())
             setTimeout(() => {
                 // return status of OK if funds are successfully deposited, or reject as in the case of an error
                 // http status code of 200 would be returned by the service for successful call, or 500 for technical error, etc.
@@ -52,18 +55,20 @@ const api = {
     // HTTP GET method for underlying service API
     getBalance: async () => {
         return new Promise((resolve) => {
+            // promise used here for demonstration, but could be changed to "await" and return the response from the service instead without returning "new Promise" (e.g. const res = await getBalance())
+            setTimeout(() => {
                 // return status of OK if balance is successfull retrieved, or reject as in the case of an error
                 // http status code of 200 would be returned by the service for successful call, or 500 for technical error, etc.
-            setTimeout(() => {
                 resolve({ data: { status: "OK" } });
             }, 500); // Simulate network latency
         });
     },
     exitApplication: async () => {
         return new Promise((resolve) => {
+            // promise used here for demonstration, but could be changed to "await" and return the response from the service instead without returning "new Promise" (e.g. const res = await exitApplication())
+            setTimeout(() => {
                 // return status of OK for any updates to the service on user exit, or reject as in the case of an error
                 // http status code of 200 would be returned by the service for successful call, or 500 for technical error, etc.
-            setTimeout(() => {
                 resolve({ data: { status: "OK" } });
             }, 500); // Simulate network latency
         });
