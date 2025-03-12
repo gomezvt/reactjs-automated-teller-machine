@@ -14,7 +14,7 @@
 
 // 4.
 // based on the user's interactions on the UI to either check balance, withdraw funds, deposit funds, or exit the application, a call from the atm-screen component
-// in this project would be made to the respective function in this api-client to call the backend service using async/await in order to await a promise (response) 
+// in this project would be made to the respective function in this api-client to call the backend service using async/await in order to await a promise (eventual response) 
 // and display the information (such as the user's balance) on the screen
 
 
