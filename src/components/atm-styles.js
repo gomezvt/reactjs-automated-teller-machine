@@ -48,14 +48,13 @@ export const useStyles = makeStyles()((theme) => ({
         backgroundColor: "#7eb4d5",
         width: "235px",
         height: "210px",
-        paddingTop: "15px"
+        paddingTop: "15px",
     },
     screenBgStyle: {
         padding: "5px 0 5px 5px",
         ustifyItems: "center",
         backgroundColor: theme.palette.grey[300],
         width: "240px",
-        minHeight: "210px"
     },
     screenLayoutStyle: {
         padding: theme.spacing(0),
@@ -66,25 +65,24 @@ export const useStyles = makeStyles()((theme) => ({
     },
     stickerGraffitiStyle: {
         position: "absolute",
-        margin: "-10px 0 0 -45px"
+        margin: "-5px 0 0 -50px"
     },
     rightButtonStyle: {
         justifyContent: "end",
         flexDirection: "column",
         height: "220px",
-        margin: "-7px 0 0 0"
+        margin: "3px 0 0 0"
     },
     leftButtonStyle: {
         justifyContent: "end",
         flexDirection: "column",
         height: "220px",
-        margin: "-7px 0 0 0"
+        margin: "3px 0 0 0"
     },
     optionContainerStyle: {
         justifyContent: "end",
         flexDirection: "column",
-        height: "200px",
-        margin: "-33px 0 0 0"
+        height: "175px",
     },
     rightOptionStyle: {
         height: "33px",
